@@ -7,7 +7,7 @@ import randomWord from "./randomWord";
 	BUGS:
 		[X]Reset input not working on first value
 		[ ]Skip word and lose points on last guess
-		[ ]Optimize for 4G
+		[ ]Optimize for slower network
 	TODO:
 		[ ]Add env variable key
 		[ ]Add report functionality 
@@ -112,8 +112,8 @@ export default function Gif() {
 			},
 			body: JSON.stringify(data),
 		};
-		fetch("http://localhost:3001/api", options);
-		console.log(`Reported ${word}`);
+		// Get URL
+		fetch("https://gifguesser.uk.r.appspot.com/api", options);
 	};
 
 	return report ? (

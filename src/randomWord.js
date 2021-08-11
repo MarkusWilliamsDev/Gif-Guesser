@@ -297,7 +297,7 @@ const wordList = [
 	"farm",
 	"fast",
 	"father",
-	"favour",
+	"favor",
 	"feed",
 	"feel",
 	"few",
