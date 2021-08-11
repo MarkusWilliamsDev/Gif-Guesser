@@ -304,13 +304,13 @@ export default function Gif() {
 				</div>
 			</div>
 
-			<div className="absolute bottom-6 right-6">
+			{/* <div className="absolute bottom-6 right-6">
 				<a href="https://www.markusdev.com" target="_blank" rel="noreferrer">
 					<button className="bg-gray-400 text-white p-2 text-sm rounded-md shadow-md hover:bg-gray-500 hover:text-gray-50 hover:shadow-lg">
 						About the Creator
 					</button>
 				</a>
-			</div>
+			</div> */}
 		</div>
 	);
 }
