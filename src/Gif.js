@@ -33,7 +33,6 @@ export default function Gif() {
 	const [miss, setMiss] = useState(0);
 	const [started, setStarted] = useState(false);
 	const [hint, setHint] = useState([]);
-	const [report, setReport] = useState(false);
 
 	/** FORM **/
 	const { register, reset, handleSubmit } = useForm({
@@ -103,50 +102,7 @@ export default function Gif() {
 		}
 	};
 
-	const sendReport = () => {
-		const data = { word: word, url: gifURL };
-		const options = {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(data),
-		};
-		// Get URL
-		fetch("https://gifguesser.uk.r.appspot.com/api", options);
-	};
-
-	return report ? (
-		<div className="flex h-screen bg-gray-50">
-			<div className="m-auto text-center">
-				<div className="flex flex-col">
-					<h1 className="text-2xl font-bold">Reasons to report:</h1>
-					<ul className="text-xl text-left mx-auto">
-						<li>1) Word and gif don't match</li>
-						<li>2) Word or gif are innapropriate</li>
-					</ul>
-				</div>
-				<button
-					className="bg-red-500 p-4 m-4 rounded-md text-2xl text-gray-100 hover:bg-red-600"
-					onClick={() => {
-						sendReport();
-						setReport(false);
-						setWord(randomWord);
-					}}
-				>
-					Yes, report and skip this word
-				</button>
-				<button
-					className="bg-yellow-500 p-4 m-4 rounded-md text-2xl text-gray-100 hover:bg-yellow-600"
-					onClick={() => {
-						setReport(false);
-					}}
-				>
-					No, go back
-				</button>
-			</div>
-		</div>
-	) : started ? (
+	return started ? (
 		<div className="flex flex-col items-center justify-center md:h-screen">
 			{/* Image Container */}
 			<div className="m-6 h-1/4 lg:h-1/2">
@@ -216,15 +172,6 @@ export default function Gif() {
 					</button>
 				</div>
 			</form>
-			<button
-				onClick={() => {
-					setReport(true);
-					reset("");
-				}}
-				className="bg-red-400 w-32 p-2 mx-8 my-6 text-md text-gray-100 rounded-md hover:bg-red-500"
-			>
-				Report Word
-			</button>
 		</div>
 	) : (
 		// Game Start
@@ -302,14 +249,6 @@ export default function Gif() {
 						className="mx-0"
 					/>
 				</div>
-			</div>
-
-			<div className="absolute bottom-6 right-6">
-				<a href="https://www.markusdev.com" target="_blank" rel="noreferrer">
-					<button className="bg-gray-400 text-white p-2 text-sm rounded-md shadow-md hover:bg-gray-500 hover:text-gray-50 hover:shadow-lg">
-						About the Creator
-					</button>
-				</a>
 			</div>
 		</div>
 	);
