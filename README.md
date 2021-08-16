@@ -6,6 +6,8 @@ A web game built with React utilizing the Giphy API. You will be given a gif gen
 
 **Client:** React, Axios, TailwindCSS
 
+**Hosting** Firebase
+
 ## Future Features
 
 - Report button to remove words that don't match the gif displayed
