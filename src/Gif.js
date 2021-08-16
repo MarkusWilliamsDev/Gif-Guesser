@@ -147,7 +147,7 @@ export default function Gif() {
 			</div>
 		</div>
 	) : started ? (
-		<div className="flex flex-col items-center justify-center md:h-screen">
+		<div className="flex flex-col items-center justify-center md:h-screen overflow-hidden">
 			{/* Image Container */}
 			<div className="m-6 h-1/4 lg:h-1/2">
 				<img
@@ -156,7 +156,40 @@ export default function Gif() {
 					className="rounded-md h-full m-auto"
 				/>
 			</div>
-			<div className="flex text-4xl font-light" style={{ letterSpacing: 6 }}>
+			<form
+				autoComplete="off"
+				onSubmit={handleSubmit(onSubmit)}
+				className="grid"
+			>
+				<input
+					className="w-72 mx-auto"
+					type="text"
+					maxLength={word.length}
+					{...register("guess", {})}
+				/>
+				{/* <div className="md:flex md:flex-row md:w-full md:justify-center"> */}
+				<div className="flex flex-row">
+					<div className="has-tooltip my-6">
+						<span className="tooltip rounded md:shadow-lg p-1 mx-8 md:bg-gray-100 text-transparent md:text-red-500 -mt-10">
+							Costs {hintCost} point
+						</span>
+						<button
+							onClick={getHint}
+							type="reset"
+							className="bg-yellow-400 w-36 sm:w-48 p-4 mx-2 md:mx-8 text-lg sm:text-2xl text-gray-100 rounded-md hover:bg-yellow-500"
+						>
+							Get Hint
+						</button>
+					</div>
+					<button
+						type="submit"
+						className="bg-green-400 w-36 sm:w-48 p-4 mx-2 md:mx-8 my-6 text-lg sm:text-2xl text-gray-100 rounded-md hover:bg-green-500"
+					>
+						Check Guess
+					</button>
+				</div>
+			</form>
+			<div className="flex text-6xl font-light" style={{ letterSpacing: 6 }}>
 				{hint}
 			</div>
 			<p className="text-4xl font-bold">
@@ -171,7 +204,7 @@ export default function Gif() {
 			</p>
 
 			<div className="flex">
-				<p className="text-lg font-medium">
+				<p className="text-xl font-medium">
 					Hints:{" "}
 					{hintsUsed > 0 ? (
 						<span className="text-red-600">{hintsUsed}</span>
@@ -179,7 +212,7 @@ export default function Gif() {
 						<span>{hintsUsed}</span>
 					)}
 				</p>
-				<p className="text-lg fontg-medium ml-2">
+				<p className="text-xl fontg-medium ml-2">
 					Misses:{" "}
 					{miss > 0 ? (
 						<span className="text-red-600">{miss}</span>
@@ -188,35 +221,8 @@ export default function Gif() {
 					)}
 				</p>
 			</div>
-			<form
-				autoComplete="off"
-				onSubmit={handleSubmit(onSubmit)}
-				className="grid"
-			>
-				<input type="text" maxLength={word.length} {...register("guess", {})} />
-				{/* <div className="md:flex md:flex-row md:w-full md:justify-center"> */}
-				<div className="flex flex-row">
-					<div className="has-tooltip my-6">
-						<span className="tooltip rounded md:shadow-lg p-1 mx-8 md:bg-gray-100 text-transparent md:text-red-500 -mt-10">
-							Costs {hintCost} point
-						</span>
-						<button
-							onClick={getHint}
-							type="reset"
-							className="bg-yellow-400 w-48 p-4 mx-4 md:mx-8 text-2xl text-gray-100 rounded-md hover:bg-yellow-500"
-						>
-							Get Hint
-						</button>
-					</div>
-					<button
-						type="submit"
-						className="bg-green-400 w-48 p-4 mx-4 md:mx-8 my-6 text-2xl text-gray-100 rounded-md hover:bg-green-500"
-					>
-						Check Guess
-					</button>
-				</div>
-			</form>
-			<button
+
+			{/* <button
 				onClick={() => {
 					setReport(true);
 					reset("");
@@ -224,11 +230,11 @@ export default function Gif() {
 				className="bg-red-400 w-32 p-2 mx-8 my-6 text-md text-gray-100 rounded-md hover:bg-red-500"
 			>
 				Report Word
-			</button>
+			</button> */}
 		</div>
 	) : (
 		// Game Start
-		<div className="h-screen relative">
+		<div className="h-screen relative overflow-hidden">
 			<div className="flex h-1/3 justify-center">
 				<img
 					src="https://media.giphy.com/media/8lQyyys3SGBoUUxrUp/giphy.gif"
@@ -253,7 +259,7 @@ export default function Gif() {
 							<p className="font-light">beta</p>
 						</span>
 					</div>
-					<p className="text-lg font-light mt-6 w-96 text-center px-4">
+					<p className="sm:text-lg font-light mt-6 w-80 sm:w-96 text-center px-4">
 						You will be given a gif generated from a random word. Your job is to
 						guess what the word is from just the gif.
 					</p>
