@@ -1,4 +1,4 @@
 node_modules/
-firebase
-github
+.firebase
+.github/workflows
 build
