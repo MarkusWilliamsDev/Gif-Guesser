@@ -81,10 +81,15 @@ export default function Gif() {
 		}
 	}, [word]);
 
+	const getOccurrence = (array, value) => {
+		return array.filter((v) => v === value).length;
+	};
+
 	const getHint = () => {
 		setHintsUsed(hintsUsed + 1);
 		let ranIndex = Math.floor(Math.random() * word.length);
-		if (hint.includes("_")) {
+		// Check if hint contains more than one blank ("_")
+		if (getOccurrence(hint, "_") >= 2) {
 			if (hint[ranIndex] === word[ranIndex]) {
 				getHint();
 			}
@@ -96,8 +101,8 @@ export default function Gif() {
 			});
 		} else {
 			reset("");
+			setScore(score - 1);
 			setWord(randomWord);
-			setScore(score - 5);
 			setHintsUsed(hintsUsed);
 			setMiss(miss + 1);
 		}
