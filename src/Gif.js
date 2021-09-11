@@ -6,7 +6,7 @@ import randomWord from "./randomWord";
 /**
 	BUGS:
 		[X]Reset input not working on first value
-		[ ]Skip word and lose points on last guess
+		[X]Skip word and lose points on last guess
 		[ ]Optimize for slower network
 	TODO:
 		[ ]Add env variable key
@@ -34,6 +34,10 @@ export default function Gif() {
 	const [started, setStarted] = useState(false);
 	const [hint, setHint] = useState([]);
 	const [report, setReport] = useState(false);
+	const [correct, setCorrect] = useState(false);
+	const [incorrect, setIncorrect] = useState(false);
+	const [correctGifURL, setCorrectGifURL] = useState();
+	const [incorrectGifURL, setIncorrectGifURL] = useState();
 
 	/** FORM **/
 	const { register, reset, handleSubmit } = useForm({
@@ -48,13 +52,21 @@ export default function Gif() {
 		reset("");
 		if (data.guess.length > 0) {
 			if (data.guess.toUpperCase() === word.toUpperCase()) {
-				setScore(score + correctPoints);
-				setWord(randomWord());
+				setCorrect(true);
 				reset("");
+				setTimeout(() => {
+					setCorrect(false);
+					setScore(score + correctPoints);
+					setWord(randomWord());
+				}, 1500);
 			} else {
-				setMiss(miss + 1);
-				setScore(score - incorrectCost);
+				setIncorrect(true);
 				reset("");
+				setTimeout(() => {
+					setIncorrect(false);
+					setMiss(miss + 1);
+					setScore(score - incorrectCost);
+				}, 1500);
 			}
 		}
 	};
@@ -155,11 +167,29 @@ export default function Gif() {
 		<div className="flex flex-col items-center justify-center md:h-screen overflow-hidden">
 			{/* Image Container */}
 			<div className="m-6 h-1/4 lg:h-1/2">
-				<img
-					src={gifURL}
-					alt="Random Gif"
-					className="rounded-md h-full m-auto"
-				/>
+				{correct ? (
+					<img
+						src={
+							"https://media.giphy.com/media/ummeQH0c3jdm2o3Olp/giphy.gif?cid=ecf05e473atv000t7zmrgwhk8yzp1ynlop3spug332a0dd3n&rid=giphy.gif&ct=g"
+						}
+						alt="Random Gif"
+						className="rounded-md h-full m-auto"
+					/>
+				) : incorrect ? (
+					<img
+						src={
+							"https://media.giphy.com/media/9dgnO4jts7kmsFcSPq/giphy.gif?cid=ecf05e4777y3drvumbxo43ykswdf0b3fygiqmud588ctukqg&rid=giphy.gif&ct=g"
+						}
+						alt="Random Gif"
+						className="rounded-md h-full m-auto"
+					/>
+				) : (
+					<img
+						src={gifURL}
+						alt="Random Gif"
+						className="rounded-md h-full m-auto"
+					/>
+				)}
 			</div>
 			<form
 				autoComplete="off"
@@ -172,7 +202,6 @@ export default function Gif() {
 					maxLength={word.length}
 					{...register("guess", {})}
 				/>
-				{/* <div className="md:flex md:flex-row md:w-full md:justify-center"> */}
 				<div className="flex flex-row">
 					<div className="has-tooltip my-6">
 						<span className="tooltip rounded md:shadow-lg p-1 mx-8 md:bg-gray-100 text-transparent md:text-red-500 -mt-10">
@@ -238,7 +267,7 @@ export default function Gif() {
 			</button> */}
 		</div>
 	) : (
-		// Game Start
+		// Game Start Screen
 		<div className="h-screen relative overflow-hidden">
 			<div className="flex h-1/3 justify-center">
 				<img
