@@ -3,7 +3,7 @@
 
 A web game built with React utilizing the Giphy API. You will be given a gif generated from a random word. Your job is to guess what the word is from just the gif.
 
-## Game Link
+## Demo
 
 You can play the game here:
 https://gifguesser.com/
